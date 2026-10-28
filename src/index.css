@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Sora", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  --color-bg: #09090b;
+  --color-elevated: #18181b;
+  --color-border: #27272a;
+  --color-text: #fafafa;
+  --color-muted: #a1a1aa;
+  --color-dim: #71717a;
+  --color-accent: #e4e4e7;
+  --color-growth: #39d353;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: 6.5rem;
+  }
+}
+
+body {
+  min-height: 100dvh;
+  margin: 0;
+  overflow-x: hidden;
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(80% 50% at 50% -20%, rgb(255 255 255 / 0.04), transparent 55%),
+    radial-gradient(50% 40% at 100% 50%, rgb(255 255 255 / 0.02), transparent 50%);
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+  overflow-x: clip;
+}
+
+::selection {
+  color: #fff;
+  background: rgb(255 255 255 / 0.15);
+}
+
+@layer components {
+  .shell {
+    width: min(1080px, 100% - 1.5rem);
+    margin-inline: auto;
+  }
+
+  @media (min-width: 480px) {
+    .shell {
+      width: min(1080px, 100% - 2rem);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .shell {
+      width: min(1080px, 100% - 2.5rem);
+    }
+  }
+
+  .mono {
+    font-family: var(--font-mono);
+  }
+
+  .field {
+    width: 100%;
+    max-width: 100%;
+    padding: 0.85rem 1rem;
+    border: 1px solid color-mix(in srgb, var(--color-border) 70%, transparent);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--color-bg) 55%, transparent);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    outline: none;
+    backdrop-filter: blur(8px);
+    transition: border-color 0.2s;
+  }
+
+  @media (min-width: 768px) {
+    .field {
+      font-size: 0.95rem;
+    }
+  }
+
+  .field:focus {
+    border-color: #52525b;
+  }
+
+  .field::placeholder {
+    color: var(--color-dim);
+  }
+}
+
+@keyframes site-twinkle {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.site-star,
+.site-star-bright {
+  animation-name: site-twinkle;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.site-star-bright {
+  opacity: 0.85;
+}
+
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.caret {
+  animation: caret-blink 1s step-end infinite;
+}
+
+@supports (padding: env(safe-area-inset-top)) {
+  .safe-top {
+    padding-top: max(1.25rem, env(safe-area-inset-top));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .site-star,
+  .site-star-bright,
+  .caret {
+    animation: none;
+  }
+}
